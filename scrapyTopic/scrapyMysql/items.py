@@ -19,8 +19,21 @@ import scrapy
 class ScrapymysqlItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    tag = scrapy.Field()  # 标签字段
-    cont = scrapy.Field()  # 名言内容
-    areaid = scrapy.Field()
-    areaname = scrapy.Field()
+    title = scrapy.Field()  # 标签字段
+    category = scrapy.Field()  # 名言内容
+    provice = scrapy.Field()
+    city = scrapy.Field()
+    address = scrapy.Field()
+    infocome = scrapy.Field()
+    missnumber = scrapy.Field()
+    missage = scrapy.Field()
+    missquality = scrapy.Field()
+    missappearance = scrapy.Field()
+    sextype = scrapy.Field()
+    price = scrapy.Field()
+    bustime = scrapy.Field()
+    env = scrapy.Field()
+    safety = scrapy.Field()
+    contact = scrapy.Field()
+    evaluate = scrapy.Field()
     pass

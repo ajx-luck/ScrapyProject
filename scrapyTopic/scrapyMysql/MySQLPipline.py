@@ -11,7 +11,7 @@ scrapy crawl inputMysql
 创建者：scrapy中文网（http://www.scrapyd.cn）；
 """
 import pymysql.cursors
-
+import time
 
 class MySQLPipeline(object):
     def __init__(self):
@@ -29,10 +29,15 @@ class MySQLPipeline(object):
 
     def process_item(self, item, spider):
         self.cursor.execute(
-            """insert into area(aid, name)
-            value (%s, %s)""",  # 纯属python操作mysql知识，不熟悉请恶补
-            (item['areaid'].split('areaid=')[-1],  # item里面定义的字段和表字段对应
-             item['areaname'].strip('[').strip(']').strip(),))
+            """insert into area(title, user_id,category,provice,city,address,infocome,missnumber,
+            missage,missquality,missappearance,sextype,price,bustime,
+            env,safety,contact,evaluate,in_time,modify_time)
+            value (%s, %s,%s,%s, %s,%s,%s, %s,%s,%s, %s,%s,%s, %s,%s,%s, %s,%s,%s, %s)""",  # 纯属python操作mysql知识，不熟悉请恶补
+            (item['title'],  # item里面定义的字段和表字段对应
+             1,item['category'],item['provice'],item['city'],item['address'],item['infocome'],
+             item['missnumber'],item['missage'],item['missquality'],item['missappearance'],item['sextype'],
+             item['bustime'],item['env'],item['safety'],item['contact'],item['evaluate'],
+             time.strftime('%Y-%m-%d %H:%M:%S'),time.strftime('%Y-%m-%d %H:%M:%S')))
         # 提交sql语句
         self.connect.commit()
         return item  # 必须实现返回

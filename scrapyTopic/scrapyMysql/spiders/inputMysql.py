@@ -18,20 +18,22 @@ from scrapyMysql.items import ScrapymysqlItem  # 引入item
 class InputmysqlSpider(scrapy.Spider):
     name = "inputMysql"
     allowed_domains = ['7t85.com']
-    start_urls = ['http://www.7t85.com']
+    start_urls = ['http://www.7t85.com/ShowInfo.asp?id=106589']
 
     def parse(self, response):
-        mingyan = response.css('a')
 
         item = ScrapymysqlItem()  # 实例化item类
+        topic = response.css('.ff660016')
+        t = topic[0]
 
-        for v in mingyan:  # 循环获取每一条名言里面的：名言内容、作者、标签
-            aa = v.xpath('@href').extract_first()
-            if "areaid" in aa:
-                item['areaid'] = aa  # 提取名言
-                item['areaname'] = v.xpath('text()').extract_first()  # 提取标签
-                yield item  # 把取到的数据提交给pipline处理
+        atxt = t.xpath('string(..)').extract_first().strip('\t').strip()
+        tx1 = "".join(atxt.split())
+        arrs = tx1.split('：')
+        length = len(arrs)
 
-
+        for i in range(1,length-1):
+            print(arrs[i][:-4])
+        item['title'] = atxt
+        yield item  # 把取到的数据提交给pipline处理
 
 
