@@ -31,9 +31,25 @@ class InputmysqlSpider(scrapy.Spider):
         arrs = tx1.split('：')
         length = len(arrs)
 
-        for i in range(1,length-1):
-            print(arrs[i][:-4])
-        item['title'] = atxt
+        item['title'] = arrs[1][:-4]
+        item['category'] = arrs[2][:-4]
+        addrs = arrs[3][:-4].split("-")
+        item['provice'] = addrs[0]
+        item['city'] = addrs[1]
+        item['address'] = arrs[4][:-4]
+        item['infocome'] = arrs[5][:-4]
+        item['missnumber'] = arrs[6][:-4]
+        item['missage'] = arrs[7][:-4]
+        item['missquality'] = arrs[8][:-4]
+        item['missappearance'] = arrs[9][:-4]
+        item['sextype'] = arrs[10][:-4]
+        item['price'] = arrs[11][:-4]
+        item['bustime'] = arrs[12][:-4]
+        item['env'] = arrs[13][:-4]
+        item['safety'] = arrs[14][:-4]
+        item['contact'] = arrs[15][:-4]
+        item['evaluate'] = arrs[16][:-4]
+
         yield item  # 把取到的数据提交给pipline处理
 
 
