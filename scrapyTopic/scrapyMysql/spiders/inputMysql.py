@@ -18,7 +18,21 @@ from scrapyMysql.items import ScrapymysqlItem  # 引入item
 class InputmysqlSpider(scrapy.Spider):
     name = "inputMysql"
     allowed_domains = ['7t85.com']
-    start_urls = ['http://www.7t85.com/ShowInfo.asp?id=106589']
+    start_urls = ['http://www.7t85.com/ShowInfo.asp?id=106590']
+
+    def start_requests(self):
+        # 该cookie是登陆后获取的cookie字符串。
+        cookies = "anonymid=jcokuqturos8ql; depovince=GW; jebecookies=f90c9e96-78d7-4f74-b1c8-b6448492995b|||||; _r01_=1; JSESSIONID=abcx4tkKLbB1-hVwvcyew; ick_login=ff436c18-ec61-4d65-8c56-a7962af397f4; _de=BF09EE3A28DED52E6B65F6A4705D973F1383380866D39FF5; p=90dea4bfc79ef80402417810c0de60989; first_login_flag=1; ln_uact=mr_mao_hacker@163.com; ln_hurl=http://hdn.xnimg.cn/photos/hdn421/20171230/1635/main_JQzq_ae7b0000a8791986.jpg; t=24ee96e2e2301bf2c350d7102956540a9; societyguester=24ee96e2e2301bf2c350d7102956540a9; id=327550029; xnsid=e7f66e0b; loginfrom=syshome; ch_id=10016"
+        # 转换成字典
+        cookies = {i.split("=")[0]: i.split("=")[1] for i in cookies.split("; ")}
+        # headers = {"Cookie":cookies}  # cookie放到headers中无效
+        yield scrapy.Request(
+            self.start_urls[0],
+            callback=self.parse,
+            # cookies=cookies  # 携带cookie进行请求
+            # headers = headers  # cookie放到headers中无效
+        )
+
 
     def parse(self, response):
 
